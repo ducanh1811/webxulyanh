@@ -10,7 +10,7 @@ def Negative(imgin, imgout):
             r = imgin[x, y]
             s = L - 1 - r
             imgout[x, y] = s
-
+    return imgout
 def Logarit(imgin, imgout):
     M, N = imgin.shape
     c = (L-1)/np.log(L)

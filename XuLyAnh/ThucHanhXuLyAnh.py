@@ -7,7 +7,8 @@ import numpy as np
 import Chapter3 as c3
 import Chapter4 as c4
 import Chapter9 as c9
-
+import streamlit as st
+from PIL import Image
 class Main(Frame):
     
     def __init__(self, parent):
