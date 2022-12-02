@@ -1,43 +1,41 @@
 import cv2
 import numpy as np
+#import easyocr as ocr  
+from PIL import Image
 
 L = 256
 #-----Function Chapter 3-----#
-def Negative(imgin, imgout):
-    M, N = imgin.shape
+def Negative(imgin,imageout):
+    M, N, chanel = imgin.shape
     for x in range(0, M):
         for y in range(0, N):
             r = imgin[x, y]
             s = L - 1 - r
-            imgout[x, y] = s
-    return imgout
-def Logarit(imgin, imgout):
-    M, N = imgin.shape
-    c = (L-1)/np.log(L)
+            imageout[x, y] = s
+    return imageout
+def Logarit(imgin,imageout):
+    print(np.max(imgin))  
+    c = (255)/np.log(1+np.max(imgin))
+    s = c*(np.log(1 + imgin))
+    imageout = np.array(s, dtype=np.uint8)
+    return imageout
 
-    for x in range(0, M):
-        for y in range(0, N):
-            r = imgin[x, y]
-            if r == 0:
-                r = 1
-            s = c*np.log(1.0 + r)
-            imgout[x, y] = s.astype(np.uint8)
-
-def Power(imgin, imgout):
-    M, N = imgin.shape
+def Power(imgin,imageout):
+    imageout
+    M, N, chanel= imgin.shape
     gamma = 5.0
-    c = np.power(L - 1, 1 - gamma)
+    c = np.power(256 - 1, 1 - gamma)
     for x in range(0, M):
         for y in range(0, N):
             r = imgin[x, y]
             s = c*np.power(r, gamma)
-            imgout[x, y] = s.astype(np.uint8)
-
-def PiecewiseLinear(imgin, imgout):
-    M, N = imgin.shape
+            imageout[x, y] = s.astype(np.uint8)
+    return imageout
+def PiecewiseLinear(imgin,imageout):
+    M, N,cnl = imgin.shape
     rmin, rmax, rminloc, rmaxloc = cv2.minMaxLoc(imgin)
     r1 = rmin
-    if rmin == 0:
+    if (rmin == 0).any():
         r1 = 1
     s1 = 0
     r2 = rmax
@@ -53,8 +51,8 @@ def PiecewiseLinear(imgin, imgout):
                 s = (s2-s1)/(r2-r1)*(r-r1) + s1
             else:
                 s = (L-1-s2)/(L-1-r2)*(r-r2) + s2
-            imgout[x, y] = s.astype(np.uint8)
-
+            imageout[x, y] = s.astype(np.uint8)
+    return imageout
 def Histogram(imgin, imgout):
     M, N = imgin.shape
     h = np.zeros(L, np.int32)
@@ -95,8 +93,8 @@ def HistogramEqualization(imgin, imgout):
             r = imgin[x, y]
             imgout[x, y] = s[r].astype(np.uint8)
  
-def LocalHistogram(imgin, imgout):
-    M, N = imgin.shape
+def LocalHistogram(imgin, imageout):
+    M, N, h = imgin.shape
     m = 3
     n = 3
     a = m // 2
@@ -108,8 +106,8 @@ def LocalHistogram(imgin, imgout):
                 for t in range(-b, b+1):
                     w[s+a, t+b] = imgin[x+s, y+t]
             cv2.equalizeHist(w, w)
-            imgout[x, y] = w[a, b]
-
+            imageout[x, y] = w[a, b]
+    return imageout
 def HistogramStatistics(imgin, imgout):
     M, N = imgin.shape
     [mG, sigmaG] = cv2.meanStdDev(imgin)
@@ -151,7 +149,7 @@ def MySmoothing(imgin, imgout):
             imgout[x, y] = res.astype(np.uint8)
 
 def Smoothing(imgin):
-    M, N = imgin.shape
+    M, N, h = imgin.shape
     m = 21
     n = 21
     a = m // 2
@@ -162,7 +160,7 @@ def Smoothing(imgin):
     return imgout
 
 def SmoothingGauss(imgin):
-    M, N = imgin.shape
+    M, N, h = imgin.shape
     m = 51
     n = 51
     a = m // 2

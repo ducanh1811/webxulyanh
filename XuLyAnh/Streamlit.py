@@ -5,8 +5,34 @@ import Chapter3 as c3
 import Chapter4 as c4
 import Chapter9 as c9
 from PIL import Image
-# from streamlit_option_menu import option_menu
-
+from streamlit_option_menu import option_menu
+# import os
+# import sys
+# import joblib
+import tensorflow as tf
+# from object_detection.utils import config_util
+# from object_detection.utils import label_map_util
+# from object_detection.utils import visualization_utils as viz_utils
+# from object_detection.builders import model_builder
+page_bg_img = """
+<style>
+[data-testid="stAppViewContainer"] {
+background-image: url('https://th.bing.com/th/id/R.132ad8fefa6e7199c5d7e7a617ee0ed5?rik=N7EzPnZdzfY6pQ&pid=ImgRaw&r=0');
+background-size: 100%;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+[data-testid="stAppViewSidebar"]{
+background-image: url('https://th.bing.com/th/id/R.132ad8fefa6e7199c5d7e7a617ee0ed5?rik=N7EzPnZdzfY6pQ&pid=ImgRaw&r=0');
+background-size: 100%;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+</style>
+"""
+st.markdown(page_bg_img, unsafe_allow_html=True)
 def brighten_image(image, amount):
     img_bright = cv2.convertScaleAbs(image, beta=amount)
     return img_bright
@@ -22,15 +48,16 @@ def enhance_details(img):
     return hdr
 
 
-def main_loop():
+def EditImage_loop():
     st.title("OpenCV Demo App")
     st.subheader("This app allows you to play with Image filters!")
     st.text("We use OpenCV and Streamlit for this demo")
-
+    #with st.sidebar: 
     st.sidebar.title("Edit")
     blur_rate = st.sidebar.slider("Blurring", min_value=0.5, max_value=3.5)
     brightness_amount = st.sidebar.slider("Brightness", min_value=-50, max_value=50, value=0)
     apply_enhancement_filter = st.sidebar.checkbox('Enhance Details')
+    
     st.sidebar.title("C3")
     apply_Negative_filter= st.sidebar.checkbox("Negative")
     apply_Logarit_filter= st.sidebar.checkbox("Logarit")
@@ -40,7 +67,6 @@ def main_loop():
     apply_HistogramEqualization_filter= st.sidebar.checkbox("HistogramEqualization")
     apply_LocalHistogram_filter= st.sidebar.checkbox("LocalHistogram")
     apply_HistogramStatistics_filter= st.sidebar.checkbox("HistogramStatistics")
-    apply_MySmoothing_filter= st.sidebar.checkbox("MySmoothing")
     apply_Smoothing_filter= st.sidebar.checkbox("Smoothing")
     apply_Gauss_filter= st.sidebar.checkbox("Gauss")
     apply_MySort_filter= st.sidebar.checkbox("MySort")
@@ -81,10 +107,8 @@ def main_loop():
 
     if apply_enhancement_filter:
         processed_image = enhance_details(processed_image)
-
     # C3 ----------------------------------------------------------------- 
     if apply_Negative_filter: 
-        processed_image = np.zeros(original_image.shape,np.uint8)
         processed_image = c3.Negative(original_image,processed_image)
     if apply_Logarit_filter:
         processed_image = c3.Logarit(original_image,processed_image)
@@ -100,8 +124,6 @@ def main_loop():
         processed_image = c3.LocalHistogram(original_image,processed_image)
     if apply_HistogramStatistics_filter:
         processed_image = c3.HistogramStatistics(original_image, processed_image)
-    if apply_MySmoothing_filter:
-        processed_image = c3.MySmoothing(original_image,processed_image)
     if apply_Smoothing_filter:
         processed_image = c3.Smoothing(original_image) 
     if apply_Gauss_filter:
@@ -154,7 +176,129 @@ def main_loop():
     processed_image = cv2.resize(processed_image,(512,512))
     st.text("Original Image vs Processed Image")
     st.image([original_image, processed_image])
+@tf.function
+def detect_fn(image):
+    image, shapes = detection_model.preprocess(image)
+    prediction_dict = detection_model.predict(image, shapes)
+    detections = detection_model.postprocess(prediction_dict, shapes)
+    return detections
+
+# category_index = label_map_util.create_category_index_from_labelmap(ANNOTATION_PATH+'/label_map.pbtxt')
+
+# def XoaTrung(a, L):
+#     index = []
+#     flag = np.zeros(L, np.bool)
+#     for i in range(0, L):
+#         if flag[i] == False:
+#             flag[i] = True
+#             x1 = (a[i,0] + a[i,2])/2
+#             y1 = (a[i,1] + a[i,3])/2
+#             for j in range(i+1, L):
+#                 x2 = (a[j,0] + a[j,2])/2
+#                 y2 = (a[j,1] + a[j,3])/2
+#                 d = np.sqrt((x2-x1)**2 + (y2-y1)**2)
+#                 if d < 0.2:
+#                     flag[j] = True
+#             index.append(i)
+#     for i in range(0, L):
+#         if i not in index:
+#             flag[i] = False
+#     return flag   
+# config.gpu_options.allow_growth = True
+# # session = tf.compat.v1.Session(config=config)
+# tf.compat.v1.keras.backend.set_session(session)
 
 
-if __name__ == '__main__':
-    main_loop()
+CONFIG_PATH = 'Tensorflow/workspace/models_TTD/my_ssd_mobnet/pipeline.config'
+
+CHECKPOINT_PATH = 'Tensorflow/workspace/models_TTD/my_ssd_mobnet/'
+
+ANNOTATION_PATH = 'Tensorflow/workspace/annotations'
+
+# configs = config_util.get_configs_from_pipeline_file(CONFIG_PATH)
+# detection_model = model_builder.build(model_config=configs['model'], is_training=False)
+
+# # Restore checkpoint
+# ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
+# ckpt.restore(os.path.join(CHECKPOINT_PATH, 'ckpt-6')).expect_partial()
+# def DetectFruit_Loop():
+#     image_file = st.file_uploader("Upload Your Image", type=['jpg', 'png', 'jpeg'])
+#     if not image_file:
+#         return None
+
+#     original_image = Image.open(image_file)
+#     original_image = np.array(original_image)
+#     input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
+#     detections = detect_fn(input_tensor)
+    
+#     num_detections = int(detections.pop('num_detections'))
+#     detections = {key: value[0, :num_detections].numpy()
+#               for key, value in detections.items()}
+#     detections['num_detections'] = num_detections
+    
+#     # detection_classes should be ints.
+#     detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
+
+#     label_id_offset = 1
+#     image_np_with_detections = image_np.copy()
+#     my_box = detections['detection_boxes']
+#     my_class = detections['detection_classes']+label_id_offset
+#     my_score = detections['detection_scores']
+
+#     my_score = my_score[my_score >= 0.7]
+#     L = len(my_score)
+#     my_box = my_box[0:L]
+#     my_class = my_class[0:L]
+    
+#     flagTrung = XoaTrung(my_box, L)
+#     my_box = my_box[flagTrung]
+#     my_class = my_class[flagTrung]
+#     my_score = my_score[flagTrung]
+
+#         # viz_utils.visualize_boxes_and_labels_on_image_array(
+#         #         image_np_with_detections,
+#         #         detections['detection_boxes'],
+#         #         detections['detection_classes']+label_id_offset,
+#         #         detections['detection_scores'],
+#         #         category_index,
+#         #         use_normalized_coordinates=True,
+#         #         max_boxes_to_draw=5,
+#         #         min_score_thresh=.5,
+#         #         agnostic_mode=False)
+
+#     viz_utils.visualize_boxes_and_labels_on_image_array(
+#             image_np_with_detections,
+#             my_box,
+#             my_class,
+#             my_score,
+#             category_index,
+#             use_normalized_coordinates=True,
+#             max_boxes_to_draw=5,
+#             min_score_thresh=.7,
+#             agnostic_mode=False)
+#     st.image(image_np_with_detections)
+selected = option_menu(
+    menu_title=None,  # required
+    options=["Chỉnh sửa ảnh", "Nhân diện khuôn mặt", "Nhận diện trái cây"],  # required
+    icons=["house", "book", "envelope"],  # optional
+    menu_icon="cast",  # optional
+    default_index=0,  # optional
+    orientation="horizontal",
+    styles={
+        "container": {"padding": "0!important", "background-color": "#dddfd4"},
+        "icon": {"color": "orange", "font-size": "25px","text-align": "left"},
+        "nav-link": {
+            "font-size": "25px",
+            "text-align": "center",
+            "margin": "0px",
+            "--hover-color": "#eee",
+        },
+        "nav-link-selected": {"background-color": "#3fb0ac", "color":"#fae596"},
+        },
+)
+if selected == "Chỉnh sửa ảnh":
+    EditImage_loop()
+if selected == "Nhân diện khuôn mặt":
+    st.title(f"You have selected {selected}")
+if selected == "Nhận diện trái cây":
+    st.title(f"You have selected {selected}")
