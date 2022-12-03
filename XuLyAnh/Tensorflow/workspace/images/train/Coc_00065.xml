@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>Coc_00065.jpg</filename>
+	<path>d:\sinhvienmoi\train\Coc_00065.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Coc</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>71</xmin>
+			<ymin>34</ymin>
+			<xmax>227</xmax>
+			<ymax>194</ymax>
+		</bndbox>
+	</object>
+</annotation>

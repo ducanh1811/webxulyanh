@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban02</folder>
+	<filename>Buoi_00082.jpg</filename>
+	<path>D:\python\SinhVien\train\Ban02\Buoi_00082.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Buoi</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>87</xmin>
+			<ymin>98</ymin>
+			<xmax>222</xmax>
+			<ymax>249</ymax>
+		</bndbox>
+	</object>
+</annotation>

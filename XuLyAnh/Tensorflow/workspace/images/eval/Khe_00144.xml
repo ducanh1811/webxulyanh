@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban15</folder>
+	<filename>Khe_00144.jpg</filename>
+	<path>E:\Documents\THXLA\SinhVien\eval\Ban15\Khe_00144.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Khe</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>33</xmin>
+			<ymin>34</ymin>
+			<xmax>186</xmax>
+			<ymax>199</ymax>
+		</bndbox>
+	</object>
+</annotation>

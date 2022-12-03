@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban04</folder>
+	<filename>Cam_00089.jpg</filename>
+	<path>D:\Image_Processing\PractiseImg\SinhVien\train\Ban04\Cam_00089.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Cam</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>91</xmin>
+			<ymin>1</ymin>
+			<xmax>228</xmax>
+			<ymax>152</ymax>
+		</bndbox>
+	</object>
+</annotation>

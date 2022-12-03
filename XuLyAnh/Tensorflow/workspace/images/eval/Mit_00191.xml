@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban15</folder>
+	<filename>Mit_00191.jpg</filename>
+	<path>E:\Documents\THXLA\SinhVien\eval\Ban15\Mit_00191.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Mit</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>132</xmin>
+			<ymin>40</ymin>
+			<xmax>280</xmax>
+			<ymax>197</ymax>
+		</bndbox>
+	</object>
+</annotation>

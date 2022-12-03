@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban11</folder>
+	<filename>Mit_00110.jpg</filename>
+	<path>E:\XU_LI_ANH\SinhVien\train\Ban11\Mit_00110.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Mit</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>11</xmin>
+			<ymin>35</ymin>
+			<xmax>185</xmax>
+			<ymax>191</ymax>
+		</bndbox>
+	</object>
+</annotation>

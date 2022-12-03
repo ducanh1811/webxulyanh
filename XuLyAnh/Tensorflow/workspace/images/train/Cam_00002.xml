@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>Cam_00002.jpg</filename>
+	<path>d:\sinhvienmoi\train\Cam_00002.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Cam</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>54</xmin>
+			<ymin>38</ymin>
+			<xmax>207</xmax>
+			<ymax>194</ymax>
+		</bndbox>
+	</object>
+</annotation>

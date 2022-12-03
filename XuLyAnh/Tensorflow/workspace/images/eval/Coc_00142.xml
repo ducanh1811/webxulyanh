@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban15</folder>
+	<filename>Coc_00142.jpg</filename>
+	<path>E:\Documents\THXLA\SinhVien\eval\Ban15\Coc_00142.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Coc</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>87</xmin>
+			<ymin>58</ymin>
+			<xmax>228</xmax>
+			<ymax>210</ymax>
+		</bndbox>
+	</object>
+</annotation>

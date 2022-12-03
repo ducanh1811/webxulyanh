@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban03</folder>
+	<filename>Cam_00047.jpg</filename>
+	<path>D:\python\SinhVien\train\Ban03\Cam_00047.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Cam</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>69</xmin>
+			<ymin>49</ymin>
+			<xmax>221</xmax>
+			<ymax>199</ymax>
+		</bndbox>
+	</object>
+</annotation>

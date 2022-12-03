@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban09</folder>
+	<filename>Khe_00116.jpg</filename>
+	<path>E:\SinhVien\train\Ban09\Khe_00116.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Khe</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>93</xmin>
+			<ymin>46</ymin>
+			<xmax>239</xmax>
+			<ymax>204</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban14</folder>
+	<filename>Buoi_00112.jpg</filename>
+	<path>C:\Users\ASUS\OneDrive\Desktop\SinhVien\eval\Ban14\Buoi_00112.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Buoi</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>74</xmin>
+			<ymin>61</ymin>
+			<xmax>217</xmax>
+			<ymax>215</ymax>
+		</bndbox>
+	</object>
+</annotation>

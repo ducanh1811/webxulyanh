@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban04</folder>
+	<filename>Coc_00036.jpg</filename>
+	<path>D:\Image_Processing\PractiseImg\SinhVien\train\Ban04\Coc_00036.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Coc</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>71</xmin>
+			<ymin>54</ymin>
+			<xmax>213</xmax>
+			<ymax>214</ymax>
+		</bndbox>
+	</object>
+</annotation>

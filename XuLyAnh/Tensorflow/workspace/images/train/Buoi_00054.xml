@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>Buoi_00054.jpg</filename>
+	<path>d:\sinhvienmoi\train\Buoi_00054.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Buoi</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>73</xmin>
+			<ymin>4</ymin>
+			<xmax>207</xmax>
+			<ymax>164</ymax>
+		</bndbox>
+	</object>
+</annotation>
