@@ -84,29 +84,25 @@ def EditImage_loop():
     apply_Logarit_filter= st.sidebar.checkbox("Logarit")
     apply_Power_filter= st.sidebar.checkbox("Power")
     apply_HistogramEqualization_filter= st.sidebar.checkbox("HistogramEqualization")
+    st.sidebar.text("Smoothing of Image")
     apply_Smoothing_filter= st.sidebar.checkbox("Smoothing")
-    apply_Gauss_filter= st.sidebar.checkbox("Gauss")
+    apply_Gauss_filter= st.sidebar.checkbox("Gaussian Smoothing")
+    st.sidebar.text("Sharpening Filter")
     apply_Sharpen_filter= st.sidebar.checkbox("Sharpen")
     apply_UnSharpMasking_filter= st.sidebar.checkbox("UnSharpMasking")
+    apply_Bilateral_filter= st.sidebar.checkbox("Bilateral Filter")
+    st.sidebar.text("Frequency Band Filter")
+    apply_LowPass_filter=st.sidebar.checkbox("Low Pass")
+    st.sidebar.text("Others")
+    apply_Mean_filter=st.sidebar.checkbox("Mean Filter")
+    apply_Median_filter=st.sidebar.checkbox("Median Filter")
     apply_Gradient_filter= st.sidebar.checkbox("Gradient")
-    
-    st.sidebar.title("C4")
-    apply_Spectrum_filter= st.sidebar.checkbox("Spectrum")
-    apply_FrequencyFilter_filter= st.sidebar.checkbox("FrequencyFilter")
-    apply_DrawFilter_filter= st.sidebar.checkbox("DrawFilter")
-    apply_NotchRejectFilter_filter= st.sidebar.checkbox("NotchRejectFilter")
-    apply_RemoveMoire_filter= st.sidebar.checkbox("RemoveMoire")
-
 
     st.sidebar.title("C9")
     apply_Erosion_filter= st.sidebar.checkbox("Erosion")
     apply_Dilation_filter= st.sidebar.checkbox("Dilation")
     apply_OpeningClosing_filter= st.sidebar.checkbox("OpeningClosing")
     apply_Boundary_filter= st.sidebar.checkbox("Boundary")
-    apply_HoleFill_filter= st.sidebar.checkbox("HoleFill")
-    apply_MyConnectedComponent_filter= st.sidebar.checkbox("MyConnectedComponent")
-    apply_ConnectedComponent_filter= st.sidebar.checkbox("ConnectedComponent")
-    apply_CountRice_filter= st.sidebar.checkbox("CountRice")
 
     image_file = st.file_uploader("Upload Your Image", type=['jpg', 'png', 'jpeg'])
     if not image_file:
@@ -139,18 +135,18 @@ def EditImage_loop():
         processed_image = c3.UnSharpMasking(original_image)
     if apply_Gradient_filter: #O
         processed_image = c3.Gradient(original_image)
+    if apply_Bilateral_filter:
+        processed_image = c3.Bileteral(original_image)
+    if apply_LowPass_filter: 
+        processed_image = c3.LowPass(original_image)
+   
+    if apply_Mean_filter: 
+        processed_image = c3.MeanFilter(original_image)
 
-    # C4 -----------------------------------------------------------
-    if apply_Spectrum_filter: #O
-        processed_image = c4.Spectrum(original_image,processed_image)
-    if apply_FrequencyFilter_filter: #O
-        processed_image = c4.FrequencyFilter(original_image,processed_image)
-    if apply_DrawFilter_filter: #O
-        processed_image = c4.DrawFilter(original_image,processed_image)
-    if apply_NotchRejectFilter_filter: #O
-        processed_image = c4.NotchRejectFilter(original_image,processed_image)
-    if apply_RemoveMoire_filter: #O
-        processed_image = c4.RemoveMoire(original_image,processed_image)
+    if apply_Median_filter:
+        processed_image = c3.MedianFilter(original_image)
+
+    
     # C9 -----------------------------------------------------------
     if apply_Erosion_filter: #O
         processed_image = c9.Erosion(original_image,processed_image)
@@ -160,14 +156,8 @@ def EditImage_loop():
         processed_image = c9.OpeningClosing(original_image,processed_image)
     if apply_Boundary_filter: #O
         processed_image = c9.Boundary(original_image)
-    if apply_HoleFill_filter: #O
-        processed_image = c9.HoleFill(original_image)
-    if apply_MyConnectedComponent_filter: #O
-        processed_image = c9.MyConnectedComponent(original_image)
-    if apply_ConnectedComponent_filter: #O
-        processed_image = c9.ConnectedComponent(original_image)
-    if apply_CountRice_filter: #O
-        processed_image = c9.CountRice(original_image)
+    
+    
     
     original_image = cv2.resize(original_image,(512,512))
     processed_image = cv2.resize(processed_image,(512,512))
@@ -325,7 +315,6 @@ selected = option_menu(
 if selected == "Chỉnh sửa ảnh":
     EditImage_loop()
 if selected == "Nhân diện khuôn mặt":
-    st.title("You have selected {selected}")
     DetectFace_loop()  
 if selected == "Nhận diện trái cây":
     DetectFruit()
