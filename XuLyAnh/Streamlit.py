@@ -173,6 +173,7 @@ def EditImage_loop():
     processed_image = cv2.resize(processed_image,(512,512))
     st.text("Original Image vs Processed Image")
     st.image([original_image, processed_image])
+    st.button('Download', key=None, help=None, on_click=processed_image.save('file.jgp'), args=None, kwargs=None, type="secondary", disabled=False)
 
 @tf.function
 def detect_fn(image):
