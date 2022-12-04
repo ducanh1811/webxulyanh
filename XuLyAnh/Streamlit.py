@@ -2,7 +2,6 @@ import cv2
 import streamlit as st
 import numpy as np
 import Chapter3 as c3
-import Chapter4 as c4
 import Chapter9 as c9
 from PIL import Image
 from streamlit_option_menu import option_menu
@@ -14,17 +13,16 @@ from object_detection.utils import config_util
 from object_detection.utils import label_map_util   
 from object_detection.utils import visualization_utils as viz_utils
 from object_detection.builders import model_builder
-
+import datetime
 page_bg_img = """
 <style>
 [data-testid="stAppViewContainer"] {
-background: linear-gradient(white, 	#F9B7FF);
-
-ackground-size: 100%;
+background: linear-gradient(#573695, #CB53D9);
+background-size: 100%;
 background-position: center;
 background-repeat: no-repeat;
 background-attachment: fixed;
-color:black;
+color: #FCB0B4;
 font-size:24px;
 }
 </style>
@@ -66,10 +64,24 @@ def enhance_details(img):
 
 
 def EditImage_loop():
-    st.title("OpenCV Demo App")
-    st.subheader("This app allows you to play with Image filters!")
-    st.text("We use OpenCV and Streamlit for this demo")
     
+    st.markdown(
+    """
+    <style>
+    .sidebar .sidebar-content {
+        background-image: linear-gradient(#573695,#CB53D9);
+        color: white;
+    }
+    </style>
+    """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(f'<p style="color:#FCB0B4;font-size:24px;">Let\'s play with Image filters!</p>', unsafe_allow_html=True)
+
+    # picture = st.camera_input("Take a picture")
+
+    # if picture:
+    #     original_image = st.image(picture)
     st.sidebar.title("Edit Area")
     blur_rate = st.sidebar.slider("Blurring", min_value=0.5, max_value=3.5)
     brightness_amount = st.sidebar.slider("Brightness", min_value=-50, max_value=50, value=0)
@@ -90,9 +102,9 @@ def EditImage_loop():
     st.sidebar.text("Get Bound")
     apply_Boundary_filter= st.sidebar.checkbox("Boundary")
     apply_LowPass_filter= st.sidebar.checkbox("Low Pass")
+    apply_Gradient_filter= st.sidebar.checkbox("Gradient")
 
     st.sidebar.text("Others")
-    apply_Gradient_filter= st.sidebar.checkbox("Gradient")
     apply_Erosion_filter= st.sidebar.checkbox("Erosion")
     apply_Dilation_filter= st.sidebar.checkbox("Dilation")
     apply_OpeningClosing_filter= st.sidebar.checkbox("OpeningClosing")
@@ -115,8 +127,7 @@ def EditImage_loop():
     # C3 ----------------------------------------------------------------- 
     if apply_Negative_filter: 
         processed_image = c3.Negative(original_image,processed_image)
-    if apply_Logarit_filter:
-        processed_image = c3.Logarit(original_image,processed_image)
+    
     if apply_Power_filter:
         processed_image = c3.Power(original_image,processed_image)
     
@@ -158,10 +169,26 @@ def EditImage_loop():
 
     original_image = cv2.resize(original_image,(512,512))
     processed_image = cv2.resize(processed_image,(512,512))
-    st.text("Original Image vs Processed Image")
-    st.image([original_image, processed_image])
-    st.button(label=None, key=None, help=None, on_click=processed_image.save('file.jpg'), args=None, kwargs=None, type="secondary", disabled=False)
+    st.markdown(f'<p style="color:#FCB0B4;font-size:24px;">Original Image vs Processed Image</p>', unsafe_allow_html=True)
 
+    
+    st.image([original_image, processed_image])
+    img = Image.fromarray(processed_image)
+    # st.button(label=None, key=None, help=None, on_click=processed_image.save('file.jpg'), args=None, kwargs=None, type="secondary", disabled=False)
+    dt_now = datetime.datetime.now()
+    ten = f'D:/{dt_now.microsecond}.png'
+    img.save(ten)
+    title = st.text_input('Picture name:', placeholder = 'Name')
+    tenanh = title+'.png'
+    with open(ten, "rb") as file:
+        st.download_button(
+                    label="Download image",
+                    data=file,
+                    file_name=tenanh,
+                    mime="image/png"
+                )
+    if os.path.isfile(ten):
+        os.remove(ten)
 @tf.function
 def detect_fn(image):
     image, shapes = detection_model.preprocess(image)
@@ -267,7 +294,7 @@ def DetectFace_loop():
     svc = joblib.load('svc.pkl')
     mydict =   ['BanNinh', 'BanThanh','ThayDuc'
             ]
-    image_file=st.file_uploader("Thêm ảnh vào", accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None,  disabled=False, label_visibility="visible")
+    image_file=st.file_uploader("Upload Your Image", accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None,  disabled=False, label_visibility="visible")
     if not image_file:
         return None
     
@@ -284,23 +311,26 @@ def DetectFace_loop():
         test_prediction = svc.predict(face_feature)
 
         result = mydict[test_prediction[0]]
-        st.text("Bạn này là:"+ result)
+        
+        st.image(image_file)
+        st.text("Bạn này là: "+ result)
     except:
-        st.text("Không nhận diện được khuôn mặt")
+        st.markdown(f'<p style="color:#FCB0B4;font-size:24px;">Can\'\t detect this face</p>', unsafe_allow_html=True)
+        st.image(image_file)
+
+
 
 #color = st.color_picker('Pick A Color', '#fff1ac')
 #st.write('The current color is', color )
 
-picture = st.camera_input("Take a picture")
 
-if picture:
-    st.image(picture)
     
-st.markdown(f'<h1 style="color:#33ff33;font-size:24px;">{"ColorMeBlue text”"}</h1>', unsafe_allow_html=True)
+st.markdown(f'<h1 style="color:#FCB0B4;font-size:24px;">Web for Image Processing</h1>', unsafe_allow_html=True)
+st.markdown(f'<p style="color:#FCB0B4;font-size:24px;">Made by PQH - PVDA</p>', unsafe_allow_html=True)
 
 
 selected = option_menu("OPTION", ["Edit Image", 'Facial Recognition', "Fruit Identification"], 
-        icons=["pen", "book", "envelope"], menu_icon="cast", default_index=0, orientation="horizontal")
+        icons=["image", "people", "flower1"], menu_icon="cast", default_index=0, orientation="horizontal")
 selected
 
 if selected == "Edit Image":
