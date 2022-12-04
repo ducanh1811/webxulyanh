@@ -69,30 +69,36 @@ def EditImage_loop():
     st.title("OpenCV Demo App")
     st.subheader("This app allows you to play with Image filters!")
     st.text("We use OpenCV and Streamlit for this demo")
-    #with st.sidebar: 
-    st.sidebar.title("Edit")
+    
+    st.sidebar.title("Edit Area")
     blur_rate = st.sidebar.slider("Blurring", min_value=0.5, max_value=3.5)
     brightness_amount = st.sidebar.slider("Brightness", min_value=-50, max_value=50, value=0)
     apply_enhancement_filter = st.sidebar.checkbox('Enhance Details')
-    
-    st.sidebar.title("C3")
-    apply_Negative_filter= st.sidebar.checkbox("Negative")
-    apply_Logarit_filter= st.sidebar.checkbox("Logarit")
-    apply_Power_filter= st.sidebar.checkbox("Power")
-    apply_PiecewiseLinear_filter= st.sidebar.checkbox("PiecewiseLinear")
-    apply_Histogram_filter= st.sidebar.checkbox("Histogram")
-    apply_HistogramEqualization_filter= st.sidebar.checkbox("HistogramEqualization")
+      
+    st.sidebar.text("Smoothing Image")
     apply_Smoothing_filter= st.sidebar.checkbox("Smoothing")
-    apply_Gauss_filter= st.sidebar.checkbox("Gauss")
+    apply_Gauss_filter= st.sidebar.checkbox("Smoothing Gauss")
+    apply_Mean_filter= st.sidebar.checkbox("Mean Filter")
+    apply_Median_filter= st.sidebar.checkbox("Median Filter")
+  
+
+    st.sidebar.text("Sharpening")
     apply_Sharpen_filter= st.sidebar.checkbox("Sharpen")
     apply_UnSharpMasking_filter= st.sidebar.checkbox("UnSharpMasking")
-    apply_Gradient_filter= st.sidebar.checkbox("Gradient")
+    apply_Bileteral_filter= st.sidebar.checkbox("Bileteral")
 
-    st.sidebar.title("C9")
+    st.sidebar.text("Get Bound")
+    apply_Boundary_filter= st.sidebar.checkbox("Boundary")
+    apply_LowPass_filter= st.sidebar.checkbox("Low Pass")
+
+    st.sidebar.text("Others")
+    apply_Gradient_filter= st.sidebar.checkbox("Gradient")
     apply_Erosion_filter= st.sidebar.checkbox("Erosion")
     apply_Dilation_filter= st.sidebar.checkbox("Dilation")
     apply_OpeningClosing_filter= st.sidebar.checkbox("OpeningClosing")
-    apply_Boundary_filter= st.sidebar.checkbox("Boundary")
+    apply_Negative_filter= st.sidebar.checkbox("Negative")
+    apply_Power_filter= st.sidebar.checkbox("Power")
+    apply_HistogramEqualization_filter= st.sidebar.checkbox("HistogramEqualization")
 
     image_file = st.file_uploader("Upload Your Image", type=['jpg', 'png', 'jpeg'])
     if not image_file:
@@ -113,47 +119,23 @@ def EditImage_loop():
         processed_image = c3.Logarit(original_image,processed_image)
     if apply_Power_filter:
         processed_image = c3.Power(original_image,processed_image)
-    if apply_PiecewiseLinear_filter:
-        processed_image = c3.PiecewiseLinear(original_image,processed_image)
-    if apply_Histogram_filter:
-        processed_image = c3.Histogram(original_image,processed_image)
+    
     if apply_HistogramEqualization_filter:
         processed_image = c3.HistogramEqualization(original_image,processed_image)
-    if apply_LocalHistogram_filter:
-        processed_image = c3.LocalHistogram(original_image,processed_image)
-    if apply_HistogramStatistics_filter:
-        processed_image = c3.HistogramStatistics(original_image, processed_image)
+    
     if apply_Smoothing_filter:
         processed_image = c3.Smoothing(original_image) 
     if apply_Gauss_filter:
         processed_image = c3.SmoothingGauss(original_image)
-    if apply_MySort_filter:
-        processed_image = c3.MySort(original_image)
-    if apply_MedianFilter_filter:
-        processed_image = c3.MedianFilter(original_image,processed_image)
-    if apply_MySharpen_filter:
-        processed_image = c3.MySharpen(original_image,processed_image)
+    
     if apply_Sharpen_filter:
         processed_image = c3.Sharpen(original_image)
     if apply_UnSharpMasking_filter:
         processed_image = c3.UnSharpMasking(original_image)
-    if apply_MyGradient_filter: #X
-        processed_image = c3.MyGradient(original_image,processed_image)
+    
     if apply_Gradient_filter: #O
         processed_image = c3.Gradient(original_image)
 
-    # C4 -----------------------------------------------------------
-    if apply_Spectrum_filter: #O
-        processed_image = c4.Spectrum(original_image,processed_image)
-    if apply_FrequencyFilter_filter: #O
-        processed_image = c4.FrequencyFilter(original_image,processed_image)
-    if apply_DrawFilter_filter: #O
-        processed_image = c4.DrawFilter(original_image,processed_image)
-    if apply_NotchRejectFilter_filter: #O
-        processed_image = c4.NotchRejectFilter(original_image,processed_image)
-    if apply_RemoveMoire_filter: #O
-        processed_image = c4.RemoveMoire(original_image,processed_image)
-    # C9 -----------------------------------------------------------
     if apply_Erosion_filter: #O
         processed_image = c9.Erosion(original_image,processed_image)
     if apply_Dilation_filter: #O
@@ -162,14 +144,23 @@ def EditImage_loop():
         processed_image = c9.OpeningClosing(original_image,processed_image)
     if apply_Boundary_filter: #O
         processed_image = c9.Boundary(original_image)
-    
-    
-    
+    if apply_Mean_filter:
+        processed_image = c3.MeanFilter(original_image)
+
+    if apply_Median_filter: 
+        processed_image = c3.MedianFilter(original_image)
+
+    if apply_Bileteral_filter:
+        processed_image = c3.Bileteral(original_image)
+
+    if apply_LowPass_filter:
+        processed_image = c3.LowPass(original_image)
+
     original_image = cv2.resize(original_image,(512,512))
     processed_image = cv2.resize(processed_image,(512,512))
     st.text("Original Image vs Processed Image")
     st.image([original_image, processed_image])
-    sst.button(label, key=None, help=None, on_click=processed_image.save('file.jpg'), args=None, kwargs=None, type="secondary", disabled=False)
+    st.button(label=None, key=None, help=None, on_click=processed_image.save('file.jpg'), args=None, kwargs=None, type="secondary", disabled=False)
 
 @tf.function
 def detect_fn(image):
@@ -258,49 +249,49 @@ def DetectFruit():
             agnostic_mode=False)
     st.image(image_np_with_detections)
 
-# def DetectFace_loop():
-#     detector = cv2.FaceDetectorYN.create(
-#     "./face_detection_yunet_2022mar.onnx",
-#     "",
-#     (320, 320),
-#     0.9,
-#     0.3,
-#     5000
-#     )
-#     detector.setInputSize((320, 320))
+def DetectFace_loop():
+    
+    detector = cv2.FaceDetectorYN.create(
+    "./face_detection_yunet_2022mar.onnx",
+    "",
+    (320, 320),
+    0.9,
+    0.3,
+    5000
+    )
+    detector.setInputSize((320, 320))
 
-#     recognizer = cv2.FaceRecognizerSF.create(
-#             "./face_recognition_sface_2021dec.onnx","")
+    recognizer = cv2.FaceRecognizerSF.create(
+            "./face_recognition_sface_2021dec.onnx","")
 
-#     svc = joblib.load('svc.pkl')
-#     mydict =   ['Anh'
-#             ,'Kha','Lam','Ngoc','Phat' ,'Phuc','Thai','Thang','Thanh','Vi'
-#             ]
-#     image_file = st.file_uploader("Upload Your Image", type=['jpg', 'png', 'jpeg'])
-#     if not image_file:
-#         imgin = np.asarray(Image.open(image_file))
-#         #r, g, b = cv2.split(imgin)
-#         #imgin=cv2.merge([b, g, r])
+    svc = joblib.load('svc.pkl')
+    mydict =   ['BanNinh', 'BanThanh','ThayDuc'
+            ]
+    image_file=st.file_uploader("Thêm ảnh vào", accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None,  disabled=False, label_visibility="visible")
+    if not image_file:
+        return None
+    
+    imgin = np.array(Image.open(image_file))
+        #r, g, b = cv2.split(imgin)
+        #imgin=cv2.merge([b, g, r])
         
-#         cv2.namedWindow("ImageIn", cv2.WINDOW_AUTOSIZE)
-#         imgin = cv2.resize(imgin,(320,320),interpolation =cv2.INTER_AREA)
-#         faces = detector.detect(imgin)
-        
-            
-#         try:
-#             face_align = recognizer.alignCrop(imgin, faces[1][0])
-#             face_feature = recognizer.feature(face_align)
-#             test_prediction = svc.predict(face_feature)
+    cv2.namedWindow("ImageIn", cv2.WINDOW_AUTOSIZE)
+    imgin = cv2.resize(imgin,(320,320),interpolation =cv2.INTER_AREA)
+    faces = detector.detect(imgin) 
+    try:
+        face_align = recognizer.alignCrop(imgin, faces[1][0])
+        face_feature = recognizer.feature(face_align)
+        test_prediction = svc.predict(face_feature)
 
-#             result = mydict[test_prediction[0]]
-#             st.text("Bạn này tên là:"+ result)
-#         except:
-#             st.text("Không nhận diện được khuôn mặt")
+        result = mydict[test_prediction[0]]
+        st.text("Bạn này là:"+ result)
+    except:
+        st.text("Không nhận diện được khuôn mặt")
 
 #color = st.color_picker('Pick A Color', '#fff1ac')
 #st.write('The current color is', color )
 
-#picture = st.camera_input("Take a picture")
+picture = st.camera_input("Take a picture")
 
 if picture:
     st.image(picture)
@@ -314,8 +305,7 @@ selected
 
 if selected == "Edit Image":
     EditImage_loop()
-if selected == "Nhân diện khuôn mặt":
-    st.title("You have selected {selected}")
+if selected == "Facial Recognition":
     DetectFace_loop()  
-if selected == "Nhận diện trái cây":
+if selected == "Fruit Identification":
     DetectFruit()
