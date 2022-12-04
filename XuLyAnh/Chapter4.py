@@ -3,8 +3,8 @@ import numpy as np
 
 L = 256
 
-def Spectrum(imgin):
-    M, N = imgin.shape
+def Spectrum(imgin, S):
+    M, N,h = imgin.shape
     P = cv2.getOptimalDFTSize(M)
     Q = cv2.getOptimalDFTSize(N)
     f = np.zeros((P,Q), np.float)
@@ -15,11 +15,11 @@ def Spectrum(imgin):
     S = np.clip(S, 0, L-1).astype(np.uint8)
     return S
 
-def FrequencyFilter(imgin):
+def FrequencyFilter(imgin, g):
     # Buoc 1 va 2
     # Mo rong anh co kich thuoc PxQ
     # Them 0 vao phan mo rong
-    M, N = imgin.shape
+    M, N,h = imgin.shape
     P = cv2.getOptimalDFTSize(M)
     Q = cv2.getOptimalDFTSize(N)
     f = np.zeros((P,Q), np.float)
@@ -51,8 +51,8 @@ def FrequencyFilter(imgin):
     g = np.clip(g, 0, L-1).astype(np.uint8)
     return g
 
-def DrawFilter(imgin):
-    M, N = imgin.shape
+def DrawFilter(imgin,H):
+    M, N,h = imgin.shape
     P = cv2.getOptimalDFTSize(M)
     Q = cv2.getOptimalDFTSize(N)
 
@@ -186,11 +186,11 @@ def NotchRejectFilter(P, Q):
             H[u,v,0] = r
     return H
 
-def RemoveMoire(imgin):
+def RemoveMoire(imgin, g):
     # Buoc 1 va 2
     # Mo rong anh co kich thuoc PxQ
     # Them 0 vao phan mo rong
-    M, N = imgin.shape
+    M, N,h = imgin.shape
     P = cv2.getOptimalDFTSize(M)
     Q = cv2.getOptimalDFTSize(N)
     f = np.zeros((P,Q), np.float)

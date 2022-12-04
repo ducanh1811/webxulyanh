@@ -54,7 +54,7 @@ def PiecewiseLinear(imgin,imageout):
             imageout[x, y] = s.astype(np.uint8)
     return imageout
 def Histogram(imgin, imgout):
-    M, N = imgin.shape
+    M, N,cnl = imgin.shape
     h = np.zeros(L, np.int32)
     for x in range(0, M):
         for y in range(0, N):
@@ -68,10 +68,10 @@ def Histogram(imgin, imgout):
     scale = 1200
     for r in range(0, L):
         cv2.line(imgout,(r, M-1), (r, M-1-(int)(scale*p[r])), (255,255,0))
-    return
+    return imgout
 
 def HistogramEqualization(imgin, imgout):
-    M, N = imgin.shape
+    M, N,ncl = imgin.shape
     h = np.zeros(L, np.int32)
     for x in range(0, M):
         for y in range(0, N):
@@ -92,7 +92,7 @@ def HistogramEqualization(imgin, imgout):
         for y in range(0, N):
             r = imgin[x, y]
             imgout[x, y] = s[r].astype(np.uint8)
- 
+    return imgout
 def LocalHistogram(imgin, imageout):
     M, N, h = imgin.shape
     m = 3
@@ -131,10 +131,10 @@ def HistogramStatistics(imgin, imgout):
                 imgout[x, y] = (C*imgin[x, y]).astype(np.uint8)
             else:
                 imgout[x, y] = imgin[x, y]
-    return
+    return imgout
 
 def MySmoothing(imgin, imgout):
-    M, N = imgin.shape
+    M, N,h = imgin.shape
     m = 11
     n = 11
     a = m // 2
@@ -147,7 +147,7 @@ def MySmoothing(imgin, imgout):
                 for t in range(-b, b+1):
                     res = res + w[s+a, t+b]*imgin[x+s, y+t]
             imgout[x, y] = res.astype(np.uint8)
-
+    return imgout
 def Smoothing(imgin):
     M, N, h = imgin.shape
     m = 21
@@ -177,13 +177,13 @@ def SmoothingGauss(imgin):
     return imgout
 
 def MySort(w):
-    m, n = w.shape
+    m, n,h = w.shape
     w = np.reshape(w, m*n)
     w = np.sort(w)
     return w[m*n//2]
 
 def MedianFilter(imgin, imgout):
-    M, N = imgin.shape
+    M, N,h = imgin.shape
     m = 5
     n = 5
     a = m // 2
@@ -196,9 +196,9 @@ def MedianFilter(imgin, imgout):
                     w[s+a, t+b] = imgin[x+s, y+t]
             r = MySort(w)
             imgout[x, y] = r
-
+    return imgout
 def MySharpen(imgin, imgout):
-    M, N = imgin.shape
+    M, N,h = imgin.shape
     m = 3
     n = 3
     a = m // 2
@@ -225,7 +225,7 @@ def MySharpen(imgin, imgout):
             if r > L-1:
                 r = L-1
             imgout[x, y] = r
-
+    return imgout
 
 def Sharpen(imgin):
     w = np.array([[1, 1, 1], [1, -8, 1], [1, 1, 1]], np.int32)
@@ -244,7 +244,7 @@ def UnSharpMasking(imgin):
     return imgout
 
 def MyGradient(imgin, imgout):
-    M, N = imgin.shape
+    M, N,ncl = imgin.shape
     wx = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]], np.int32)
     wy = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], np.int32)
     m = 3
@@ -265,7 +265,7 @@ def MyGradient(imgin, imgout):
             if g > L-1:
                 g = L-1
             imgout[x,y] = g
-
+    return imgout
 def Gradient(imgin):
     wx = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]], np.int32)
     wy = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], np.int32)

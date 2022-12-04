@@ -6,15 +6,17 @@ L = 256
 def Erosion(imgin, imgout):
     w = cv2.getStructuringElement(cv2.MORPH_RECT,(45,45))
     cv2.erode(imgin,w,imgout)
+    return imgout
 
 def Dilation(imgin, imgout):
     w = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
     cv2.dilate(imgin,w,imgout)
+    return imgout
 def OpeningClosing(imgin, imgout):
     w = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
     temp = cv2.morphologyEx(imgin, cv2.MORPH_OPEN, w)
     cv2.morphologyEx(temp, cv2.MORPH_CLOSE, w, imgout)
-
+    return imgout
 def Boundary(imgin):
     w = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
     temp = cv2.erode(imgin,w)
@@ -23,7 +25,7 @@ def Boundary(imgin):
 
 def HoleFill(imgin):
     imgout = imgin
-    M, N = imgout.shape
+    M, N,h = imgout.shape
     mask = np.zeros((M+2,N+2),np.uint8)
     cv2.floodFill(imgout,mask,(105,297),L-1)
     return imgout
@@ -31,7 +33,7 @@ def HoleFill(imgin):
 def MyConnectedComponent(imgin):
     ret, temp = cv2.threshold(imgin, 200, L-1, cv2.THRESH_BINARY)
     temp = cv2.medianBlur(temp, 7)
-    M, N = temp.shape
+    M, N,h = temp.shape
     dem = 0
     color = 150
     for x in range(0, M):
@@ -62,7 +64,7 @@ def ConnectedComponent(imgin):
     print('Co %d thanh phan lien thong' % (dem-1))
 
     a = np.zeros(dem, np.int)
-    M, N = label.shape
+    M, N,h = label.shape
     color = 150
     for x in range(0, M):
         for y in range(0, N):
@@ -84,7 +86,7 @@ def CountRice(imgin):
     print('Co %d hat gao' % dem)
 
     a = np.zeros(dem, np.int)
-    M, N = label.shape
+    M, N,h= label.shape
     color = 150
     for x in range(0, M):
         for y in range(0, N):
