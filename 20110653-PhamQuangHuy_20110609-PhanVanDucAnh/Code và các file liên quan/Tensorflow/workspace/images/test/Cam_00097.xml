@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Ban12</folder>
+	<filename>Cam_00097.jpg</filename>
+	<path>D:\SinhVien\test\Ban12\Cam_00097.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>292</width>
+		<height>261</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Cam</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>57</xmin>
+			<ymin>91</ymin>
+			<xmax>209</xmax>
+			<ymax>251</ymax>
+		</bndbox>
+	</object>
+</annotation>
